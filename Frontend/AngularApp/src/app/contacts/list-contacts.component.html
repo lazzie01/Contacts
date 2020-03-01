@@ -1,4 +1,6 @@
-
+<p *ngIf="!contacts">
+{{statusMessage}}
+</p>
 <div class="row">
     <div class="col-md-4" *ngFor="let c of contacts">
         <div class="card mb-4 box-shadow">

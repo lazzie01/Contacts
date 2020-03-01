@@ -8,6 +8,7 @@ import { ContactsService } from '../services/contacts.service';
 })
 export class ListContactsComponent implements OnInit {
   contacts:any[];
+  statusMessage:string = "Loading please wait...";
   constructor(private _contactsService:ContactsService) { }
 
   ngOnInit(): void {
