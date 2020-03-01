@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 namespace BusinessLayer
 {
     public class ContactModel : BaseModel
@@ -32,18 +33,22 @@ namespace BusinessLayer
 
         public Contact Read(int id)
         {
-            return DB.Contacts.Find(id);
+            return DB.Contacts.Include(x => x.Emails).Include(x => x.PhoneNumbers).FirstOrDefault(x=>x.Id == id);
         }
 
         public void Update(Contact c)
         {
-            Contact contact = DB.Contacts.Find(c.Id);
+            Contact contact = DB.Contacts.Include(x => x.Emails).Include(x => x.PhoneNumbers).FirstOrDefault(x => x.Id == c.Id);
             if (contact != null)
             {
                 contact.FirstName = c.FirstName;
                 contact.LastName = c.LastName;
-                contact.Emails = c.Emails;
-                contact.PhoneNumbers = c.PhoneNumbers;
+                //remove old emails & phone numbers
+                DB.Emails.RemoveRange(contact.Emails);
+                DB.Phones.RemoveRange(contact.PhoneNumbers);
+                //add new emails & phone numbers
+                contact.Emails = c.Emails.Where(e=>!string.IsNullOrEmpty(e.Address)).ToList();
+                contact.PhoneNumbers = c.PhoneNumbers.Where(p => !string.IsNullOrEmpty(p.Number)).ToList();
                 DB.SaveChanges();
             }
         }

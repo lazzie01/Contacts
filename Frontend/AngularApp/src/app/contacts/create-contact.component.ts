@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { Contact } from '../models/contact.model';
 import { ContactsService } from '../services/contacts.service';
+
 @Component({
   selector: 'app-create-contact',
   templateUrl: './create-contact.component.html',
@@ -18,7 +18,7 @@ export class CreateContactComponent implements OnInit {
      firstName: ['', Validators.required],
      lastName: ['',Validators.required],
      email: ['',Validators.email],
-     phone: ['',Validators.pattern(/^\d+$/)],
+     phone: [''],
      alternateEmails: this._fb.array([]),
      alternatePhones: this._fb.array([])
     });
@@ -37,23 +37,25 @@ export class CreateContactComponent implements OnInit {
   }
 
   addAlternatePhones(){
-    this.alternatePhones.push(this._fb.control('',Validators.pattern(/^\d+$/)));
+    this.alternatePhones.push(this._fb.control(''));
   }
   contact:any;
   saveContact(): void{
     this.contact={
-       firstName : this.createForm.get('firstName').value,
-       lastName : this.createForm.get('lastName').value,
-       emails :this.createForm.get('alternateEmails').value,
-       phoneNumbers: this.createForm.get('alternatePhones').value
+       FirstName : this.createForm.get('firstName').value,
+       LastName : this.createForm.get('lastName').value,
+       Emails :(this.createForm.get('alternateEmails').value as any[])
+                                .map(function(e){return {Address:e}}),
+       PhoneNumbers: (this.createForm.get('alternatePhones').value as any[])
+                                      .map(function(p){return {Number:p}})
     }
-    this.contact.emails.push(this.createForm.get('email').value);
-    this.contact.phoneNumbers.push(this.createForm.get('phone').value);
+    this.contact.Emails.push({Address:this.createForm.get('email').value});
+    this.contact.PhoneNumbers.push({Number:this.createForm.get('phone').value});
     this._contactsService.create(this.contact)
-                        .subscribe(
+                         .subscribe(
                                 response =>console.log('Success!',response),
                                 error =>console.log('Error!',error)
                                 );
-    
+    window.location.href='/list';                           
   }
 }

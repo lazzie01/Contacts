@@ -1,0 +1,39 @@
+<form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="editContact()">
+    <div class="panel panel-dark">
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit Contact</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+               <label for="firstName">First Name</label>
+               <input [class.is-invalid]="editForm.get('firstName').invalid && editForm.get('firstName').touched" formControlName="firstName" type="text" class="form-control"/>
+               <small [class.d-none]="editForm.get('firstName').valid || editForm.get('firstName').untouched" class="text-danger">First Name is required</small>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input [class.is-invalid]="editForm.get('lastName').invalid && editForm.get('lastName').touched" formControlName="lastName" type="text" class="form-control"/>
+                <small [class.d-none]="editForm.get('lastName').valid || editForm.get('lastName').untouched" class="text-danger">First Name is required</small>
+             </div>
+             <div class="form-group">
+                <label for="emails">Emails</label>
+                <button class="btn btn-dark btn-sm m-2" type="button" (click)="addEmails()">Add Email</button>
+                <div formArrayName="emails" *ngFor="let x of emails.controls; let i=index">
+                <input [class.is-invalid]="editForm.get('emails').invalid && editForm.get('emails').touched"  [formControlName]="i" type="text" class="form-control my-1"/> 
+                <small [class.d-none]="editForm.get('emails').valid || editForm.get('emails').untouched" class="text-danger">Invalid Email Address</small>
+                </div>
+             </div>
+             <div class="form-group">
+                <label for="phones">Phone Numbers</label>
+                <button class="btn btn-dark btn-sm m-2" type="button" (click)="addPhones()">Add Phone Numbers</button>
+                <div formArrayName="phones" *ngFor="let x of phones.controls; let i=index">
+                <input [class.is-invalid]="editForm.get('phones').invalid && editForm.get('phones').touched"  [formControlName]="i" type="text" class="form-control my-1"/> 
+                <small [class.d-none]="editForm.get('phones').valid || editForm.get('phones').untouched" class="text-danger">Invalid Email Address</small>
+                </div>
+             </div>
+        </div>
+
+        <div class="panel-footer">
+            <button [disabled]="!editForm.valid" class="btn btn-light btn-outline-dark" type="submit">Save</button>
+        </div>
+    </div>
+</form>

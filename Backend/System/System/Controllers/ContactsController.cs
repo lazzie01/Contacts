@@ -36,11 +36,11 @@ namespace System.Controllers
 
         // POST api/contacts
         [HttpPost]
-        public HttpResponseMessage Post([FromBody]Contact value)
+        public HttpResponseMessage Post([FromBody]ContactVM value)
         {
             using (ContactModel c = new ContactModel())
             {
-                c.Create(value);
+                c.Create(value.ToModel());
                 return Request.CreateResponse(HttpStatusCode.Created, "Contact created");
             }
            
@@ -48,12 +48,12 @@ namespace System.Controllers
 
         // PUT api/contacts/5
         [HttpPut]
-        public HttpResponseMessage Put(int id, [FromBody]Contact value)
+        public HttpResponseMessage Put(int id, [FromBody]ContactVM value)
         {
             using (ContactModel c = new ContactModel())
             {
                 value.Id = id;
-                c.Update(value);
+                c.Update(value.ToModel());
                 return Request.CreateResponse(HttpStatusCode.OK, "Contact updated");
             }
         }
