@@ -9,21 +9,21 @@ namespace BusinessLayer
 {
     public class BaseModel: IDisposable
     {
-        protected DBContext DBContext { get; }
+        protected DBContext DB { get; }
 
         public BaseModel()
         {
-            DBContext = new DBContext();
+            DB = new DBContext();
         }
 
         public BaseModel(BaseModel callingModel)
         {
-            DBContext = callingModel.DBContext;
+            DB = callingModel.DB;
         }
 
         public void Dispose()
         {
-            ((IDisposable)DBContext).Dispose();
+            ((IDisposable)DB).Dispose();
         }
     }
 }

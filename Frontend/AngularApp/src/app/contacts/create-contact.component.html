@@ -1,0 +1,43 @@
+<form [formGroup]="createForm" (ngSubmit)="saveContact()">
+    <div class="panel panel-dark">
+        <div class="panel-heading">
+            <h3 class="panel-title">Create Contact</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+               <label for="firstName">First Name</label>
+               <input [class.is-invalid]="createForm.get('firstName').invalid && createForm.get('firstName').touched" formControlName="firstName" type="text" class="form-control"/>
+               <small [class.d-none]="createForm.get('firstName').valid || createForm.get('firstName').untouched" class="text-danger">First Name is required</small>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input [class.is-invalid]="createForm.get('lastName').invalid && createForm.get('lastName').touched" formControlName="lastName" type="text" class="form-control"/>
+                <small [class.d-none]="createForm.get('lastName').valid || createForm.get('lastName').untouched" class="text-danger">First Name is required</small>
+             </div>
+             <div class="form-group">
+                <label for="email">Email</label>
+                <button class="btn btn-dark btn-sm m-2" type="button" (click)="addAlternateEmails()">Add Email</button>
+                <input [class.is-invalid]="createForm.get('email').invalid && createForm.get('email').touched" formControlName="email" type="text" class="form-control"/>
+                <small [class.d-none]="createForm.get('email').valid || createForm.get('email').untouched" class="text-danger">Invalid Email Address</small>
+                <div formArrayName="alternateEmails" *ngFor="let altEmail of alternateEmails.controls; let i=index">
+                        <input [class.is-invalid]="createForm.get('alternateEmails').invalid && createForm.get('alternateEmails').touched" [formControlName]="i" type="text" class="form-control my-1"/>
+                        <small [class.d-none]="createForm.get('alternateEmails').valid || createForm.get('alternateEmails').untouched" class="text-danger">Invalid Email Address</small>
+                </div>
+             </div>
+             <div class="form-group">
+                <label for="phone">Phone</label>
+                <button class="btn btn-dark btn-sm m-2" type="button" (click)="addAlternatePhones()">Add Phone</button>
+                <input formControlName="phone" type="text" class="form-control"/>
+                <div formArrayName="alternatePhones" *ngFor="let phone of alternatePhones.controls; let i=index">
+                    <input [class.is-invalid]="createForm.get('alternatePhones').invalid && createForm.get('alternatePhones').touched" [formControlName]="i" type="text" class="form-control my-1"/>
+                    <small [class.d-none]="createForm.get('alternatePhones').valid || createForm.get('alternatePhones').untouched" class="text-danger">Invalid Phone Number (should be digits only)</small>
+                </div>
+             </div>
+        </div>
+
+        <div class="panel-footer">
+            <button [disabled]="!createForm.valid" class="btn btn-light btn-outline-dark" type="submit">Save</button>
+        </div>
+    </div>
+</form>
+Angular Generated Form Model: {{createForm.value | json }}

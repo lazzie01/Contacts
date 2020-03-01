@@ -18,20 +18,34 @@ namespace DataLayer
         [Required]
         public string LastName { get; set; }
 
-        public ICollection<Address> Addresses { get; set; }
-     
+        public ICollection<Email> Emails { get; set; }
+
+        public ICollection<Phone> PhoneNumbers { get; set; }
+
     }
 
-    public class Address
+    public class Email
     {
         [Key]
-        [ForeignKey("Contact")]
         public int Id { get; set; }
 
-        public string ContactNumber { get; set; }
+        public string Address { get; set; }
 
-        public string EmailAddress { get; set; }
-        
+        [ForeignKey("Contact")]
+        public int ContactId { get; set; }
+        public Contact Contact { get; set; }
+
+    }
+
+    public class Phone
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public string Number { get; set; }
+
+        [ForeignKey("Contact")]
+        public int ContactId { get; set; }
         public Contact Contact { get; set; }
 
     }

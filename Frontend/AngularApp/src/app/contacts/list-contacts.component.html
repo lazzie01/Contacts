@@ -1,0 +1,30 @@
+
+<div class="row">
+    <div class="col-md-4" *ngFor="let c of contacts">
+        <div class="card mb-4 box-shadow">
+          <img class="card-img-top" src="../../assets/default-avatar.png" width="200px" height="200px" alt="Card image cap">
+          <div class="card-header">
+                {{c.FirstName+' '+c.LastName}}
+          </div>
+          <div class="card-body">
+            Phone Numbers:
+            <p class="card-text" *ngFor="let p of c.PhoneNumbers">
+               {{p.Number}}
+            </p>
+            Email Addresses:
+            <p class="card-text" *ngFor="let e of c.Emails">
+               {{e.Address}}
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-primary">Edit</button>
+                <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+              </div>
+              <small class="text-muted">contact</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+</div>
+{{contacts | json}}
