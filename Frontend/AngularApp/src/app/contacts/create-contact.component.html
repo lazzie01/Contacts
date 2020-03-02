@@ -27,7 +27,8 @@
              <div class="form-group">
                 <label for="phone">Phone</label>
                 <button class="btn btn-dark btn-sm m-2" type="button" (click)="addAlternatePhones()">Add Phone</button>
-                <input formControlName="phone" type="text" class="form-control"/>
+                <input [class.is-invalid]="createForm.get('phone').invalid && createForm.get('phone').touched" formControlName="phone" type="text" class="form-control"/>
+                <small [class.d-none]="createForm.get('phone').valid || createForm.get('phone').untouched" class="text-danger">Invalid Phone Number (should be digits only)</small>
                 <div formArrayName="alternatePhones" *ngFor="let phone of alternatePhones.controls; let i=index">
                     <input [class.is-invalid]="createForm.get('alternatePhones').invalid && createForm.get('alternatePhones').touched" [formControlName]="i" type="text" class="form-control my-1"/>
                     <small [class.d-none]="createForm.get('alternatePhones').valid || createForm.get('alternatePhones').untouched" class="text-danger">Invalid Phone Number (should be digits only)</small>

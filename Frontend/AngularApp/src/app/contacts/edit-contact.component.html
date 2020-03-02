@@ -27,7 +27,7 @@
                 <button class="btn btn-dark btn-sm m-2" type="button" (click)="addPhones()">Add Phone Numbers</button>
                 <div formArrayName="phones" *ngFor="let x of phones.controls; let i=index">
                 <input [class.is-invalid]="editForm.get('phones').invalid && editForm.get('phones').touched"  [formControlName]="i" type="text" class="form-control my-1"/> 
-                <small [class.d-none]="editForm.get('phones').valid || editForm.get('phones').untouched" class="text-danger">Invalid Email Address</small>
+                <small [class.d-none]="editForm.get('phones').valid || editForm.get('phones').untouched" class="text-danger">Invalid Phone Number</small>
                 </div>
              </div>
         </div>

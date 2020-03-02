@@ -25,7 +25,7 @@ export class EditContactComponent implements OnInit {
           phones: this._fb.array([])
          });
          (data.Emails as any[]).map(e=>this.emails.push(this._fb.control(e.Address,Validators.email)));
-         (data.PhoneNumbers as any[]).map(p=>this.phones.push(this._fb.control(p.Number)));
+         (data.PhoneNumbers as any[]).map(p=>this.phones.push(this._fb.control(p.Number,Validators.pattern(/^\d+$/))));
       },
       error =>console.log('Error!',error)                                 
       );
@@ -45,7 +45,7 @@ export class EditContactComponent implements OnInit {
   }
 
   addPhones(){
-    this.phones.push(this._fb.control(''));
+    this.phones.push(this._fb.control('',Validators.pattern(/^\d+$/)));
   }
 
   editContact(): void{
