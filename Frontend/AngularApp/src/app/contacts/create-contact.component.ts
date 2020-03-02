@@ -18,7 +18,7 @@ export class CreateContactComponent implements OnInit {
      firstName: ['', Validators.required],
      lastName: ['',Validators.required],
      email: ['',Validators.email],
-     phone: [''],
+     phone: ['',Validators.pattern(/^\d+$/)],
      alternateEmails: this._fb.array([]),
      alternatePhones: this._fb.array([])
     });
@@ -37,7 +37,7 @@ export class CreateContactComponent implements OnInit {
   }
 
   addAlternatePhones(){
-    this.alternatePhones.push(this._fb.control(''));
+    this.alternatePhones.push(this._fb.control('',Validators.pattern(/^\d+$/)));
   }
   contact:any;
   saveContact(): void{
